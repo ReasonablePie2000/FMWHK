@@ -48,6 +48,8 @@ struct ViewIdentifier: Identifiable {
 
 let menuViews = [
     ViewIdentifier(id: 0, name: "Home", view: AnyView(Text("Home Screen"))),
-    ViewIdentifier(id: 1, name: "Nearby Bus Stops", view: AnyView(StopListView())),
-    ViewIdentifier(id: 2, name: "Screen Two", view: AnyView(Text("Screen Two"))) 
+    ViewIdentifier(id: 1, name: "Nearby Stops", view: AnyView(StopListView())),
+    ViewIdentifier(id: 2, name: "Favourite", view: AnyView(FavouriteView())),
+    ViewIdentifier(id: 3, name: "Reminder", view: AnyView(ReminderView())),
+    ViewIdentifier(id: 4, name: "Profile", view: AnyView(ProfileView())),
 ]

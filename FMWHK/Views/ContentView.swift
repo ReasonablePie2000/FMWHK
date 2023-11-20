@@ -10,11 +10,7 @@ struct ContentView: View {
     @State var isDrawerOpen: Bool = false
     @State var selectedViewIndex: Int = 0
     
-    let views: [ViewIdentifier] = [
-            ViewIdentifier(id: 0, name: "Home", view: AnyView(Text("Home Screen"))),
-            ViewIdentifier(id: 1, name: "Screen One", view: AnyView(StopListView())),
-            ViewIdentifier(id: 2, name: "Screen Two", view: AnyView(Text("Screen Two")))
-        ]
+    let views: [ViewIdentifier] = menuViews
     
     var body: some View {
         ZStack {
@@ -62,6 +58,7 @@ struct DrawerView: View {
             mainBkColor
                 .ignoresSafeArea()
             VStack {
+                Spacer()
                 ForEach(views) { view in
                     Button(action: {
                         withAnimation {
@@ -70,12 +67,16 @@ struct DrawerView: View {
                         }
                     }) {
                         Text(view.name)
+                            .font(.largeTitle)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
                     }
                 }
                 Spacer()
             }
             .padding()
-            .foregroundColor(mainColor)
+            .foregroundColor(.white)
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
