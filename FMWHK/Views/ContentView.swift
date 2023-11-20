@@ -8,22 +8,19 @@ import SwiftUI
 
 struct ContentView: View {
     @State var isDrawerOpen: Bool = false
-    @State var selectedView: String = "Home"
+    @State var selectedViewIndex: Int = 0
+    
+    let views: [ViewIdentifier] = [
+            ViewIdentifier(id: 0, name: "Home", view: AnyView(Text("Home Screen"))),
+            ViewIdentifier(id: 1, name: "Screen One", view: AnyView(StopListView())),
+            ViewIdentifier(id: 2, name: "Screen Two", view: AnyView(Text("Screen Two")))
+        ]
     
     var body: some View {
         ZStack {
             // Main View based on selectedView
             Group {
-                switch selectedView {
-                case "Home":
-                    Text("Home Screen")
-                case "Screen One":
-                    StopListView()
-                case "Screen Two":
-                    Text("Screen Two")
-                default:
-                    Text("Home Screen")
-                }
+                views[selectedViewIndex].view
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.white)
@@ -39,6 +36,7 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "line.horizontal.3")
                             .imageScale(.large)
+                            .foregroundColor(mainColor)
                             .padding()
                     }
                     Spacer()
@@ -48,7 +46,7 @@ struct ContentView: View {
             .zIndex(1)
             
             // Drawer View
-            DrawerView(isDrawerOpen: $isDrawerOpen, selectedView: $selectedView)
+            DrawerView(isDrawerOpen: $isDrawerOpen, selectedViewIndex: $selectedViewIndex, views: views)
                 .offset(x: isDrawerOpen ? 0 : -UIScreen.main.bounds.width)
         }
     }
@@ -56,47 +54,28 @@ struct ContentView: View {
 
 struct DrawerView: View {
     @Binding var isDrawerOpen: Bool
-    @Binding var selectedView: String
+    @Binding var selectedViewIndex: Int
+    let views: [ViewIdentifier]
     
     var body: some View {
         ZStack {
-            Color.blue
+            mainBkColor
+                .ignoresSafeArea()
             VStack {
-                Button(action: {
-                    withAnimation {
-                        self.isDrawerOpen = false
+                ForEach(views) { view in
+                    Button(action: {
+                        withAnimation {
+                            self.isDrawerOpen = false
+                            self.selectedViewIndex = view.id
+                        }
+                    }) {
+                        Text(view.name)
                     }
-                }) {
-                    Text("Close")
-                }
-                Button(action: {
-                    withAnimation {
-                        self.isDrawerOpen = false
-                        self.selectedView = "Home"
-                    }
-                }) {
-                    Text("Home")
-                }
-                Button(action: {
-                    withAnimation {
-                        self.isDrawerOpen = false
-                        self.selectedView = "Screen One"
-                    }
-                }) {
-                    Text("Stops Nearby")
-                }
-                Button(action: {
-                    withAnimation {
-                        self.isDrawerOpen = false
-                        self.selectedView = "Screen Two"
-                    }
-                }) {
-                    Text("Screen Two")
                 }
                 Spacer()
             }
             .padding()
-            .foregroundColor(.white)
+            .foregroundColor(mainColor)
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
