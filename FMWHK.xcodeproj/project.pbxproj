@@ -15,6 +15,7 @@
 		C47A72162B0B404B00121CAB /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72152B0B404B00121CAB /* StopView.swift */; };
 		C47A72182B0B406C00121CAB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72172B0B406C00121CAB /* MapView.swift */; };
 		C47A721A2B0B408600121CAB /* TmpData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72192B0B408600121CAB /* TmpData.swift */; };
+		C47A721C2B0B4B0E00121CAB /* StopListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A721B2B0B4B0E00121CAB /* StopListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		C47A72152B0B404B00121CAB /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		C47A72172B0B406C00121CAB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		C47A72192B0B408600121CAB /* TmpData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpData.swift; sourceTree = "<group>"; };
+		C47A721B2B0B4B0E00121CAB /* StopListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				C442C56A2B0747AA00888EEF /* ContentView.swift */,
 				C47A72152B0B404B00121CAB /* StopView.swift */,
 				C47A72172B0B406C00121CAB /* MapView.swift */,
+				C47A721B2B0B4B0E00121CAB /* StopListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C47A72132B0B3F3400121CAB /* BusRoutes.swift in Sources */,
+				C47A721C2B0B4B0E00121CAB /* StopListView.swift in Sources */,
 				C442C56B2B0747AA00888EEF /* ContentView.swift in Sources */,
 				C47A72182B0B406C00121CAB /* MapView.swift in Sources */,
 				C47A72162B0B404B00121CAB /* StopView.swift in Sources */,
