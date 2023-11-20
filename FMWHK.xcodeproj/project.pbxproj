@@ -11,6 +11,10 @@
 		C442C56B2B0747AA00888EEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C442C56A2B0747AA00888EEF /* ContentView.swift */; };
 		C442C56D2B0747AB00888EEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C442C56C2B0747AB00888EEF /* Assets.xcassets */; };
 		C442C5712B0747AB00888EEF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C442C5702B0747AB00888EEF /* Preview Assets.xcassets */; };
+		C47A72132B0B3F3400121CAB /* BusRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72122B0B3F3400121CAB /* BusRoutes.swift */; };
+		C47A72162B0B404B00121CAB /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72152B0B404B00121CAB /* StopView.swift */; };
+		C47A72182B0B406C00121CAB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72172B0B406C00121CAB /* MapView.swift */; };
+		C47A721A2B0B408600121CAB /* TmpData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72192B0B408600121CAB /* TmpData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		C442C56C2B0747AB00888EEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C442C56E2B0747AB00888EEF /* FMWHK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FMWHK.entitlements; sourceTree = "<group>"; };
 		C442C5702B0747AB00888EEF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C47A72122B0B3F3400121CAB /* BusRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRoutes.swift; sourceTree = "<group>"; };
+		C47A72152B0B404B00121CAB /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
+		C47A72172B0B406C00121CAB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		C47A72192B0B408600121CAB /* TmpData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,11 +60,13 @@
 		C442C5672B0747AA00888EEF /* FMWHK */ = {
 			isa = PBXGroup;
 			children = (
+				C47A72142B0B3FB100121CAB /* Views */,
+				C47A72112B0B3EFB00121CAB /* Model */,
 				C442C5682B0747AA00888EEF /* FMWHKApp.swift */,
-				C442C56A2B0747AA00888EEF /* ContentView.swift */,
 				C442C56C2B0747AB00888EEF /* Assets.xcassets */,
 				C442C56E2B0747AB00888EEF /* FMWHK.entitlements */,
 				C442C56F2B0747AB00888EEF /* Preview Content */,
+				C47A72192B0B408600121CAB /* TmpData.swift */,
 			);
 			path = FMWHK;
 			sourceTree = "<group>";
@@ -67,6 +77,24 @@
 				C442C5702B0747AB00888EEF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C47A72112B0B3EFB00121CAB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C47A72122B0B3F3400121CAB /* BusRoutes.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C47A72142B0B3FB100121CAB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C442C56A2B0747AA00888EEF /* ContentView.swift */,
+				C47A72152B0B404B00121CAB /* StopView.swift */,
+				C47A72172B0B406C00121CAB /* MapView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +167,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C47A72132B0B3F3400121CAB /* BusRoutes.swift in Sources */,
 				C442C56B2B0747AA00888EEF /* ContentView.swift in Sources */,
+				C47A72182B0B406C00121CAB /* MapView.swift in Sources */,
+				C47A72162B0B404B00121CAB /* StopView.swift in Sources */,
 				C442C5692B0747AA00888EEF /* FMWHKApp.swift in Sources */,
+				C47A721A2B0B408600121CAB /* TmpData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

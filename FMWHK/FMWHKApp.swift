@@ -11,7 +11,9 @@ import SwiftUI
 struct FMWHKApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                ContentView()
+            }
         }
     }
 }
