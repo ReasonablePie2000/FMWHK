@@ -18,7 +18,7 @@ struct FMWHKApp: App {
             ContentView()
                 .environmentObject(locationManager)
                 .environmentObject(globalData)
-                .environmentObject(showTitle(true))
+                .environmentObject(ShowMenuBtn(true))
                 .environmentObject(titleName("Home"))
                 .task {
                     do {
@@ -26,6 +26,8 @@ struct FMWHKApp: App {
                         globalData.globalStops = try await getStopData()
                         globalData.nearbyStops = getNearestStops(globalData.globalStops, k: 5, srcCoordinate: CLLocation(latitude: locationManager.region.center.latitude, longitude: locationManager.region.center.longitude))
                         globalData.nearbyRoutes = try await  getNearestRoutes(globalData.nearbyStops)
+                        globalData.globalRouteStop = try await getRouteStopData()
+                        
                     } catch NetworkError.invalidURL {
                         print("invalid URL")
                     } catch NetworkError.invalidResponse {

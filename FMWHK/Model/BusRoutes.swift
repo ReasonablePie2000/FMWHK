@@ -67,7 +67,7 @@ struct KMBRouteStopList: Codable {
 struct KMBRouteStop: Codable, Hashable {
     let route: String
     let bound: String
-    let service_type: String
+    let serviceType: String
     let seq: String
     let stop: String
 }
@@ -91,13 +91,44 @@ struct KMBRoute: Codable, Hashable {
     let destSc: String
 }
 
+struct KMBRouteETAList: Codable {
+    let type: String
+    let version: String
+    let generatedTimestamp: String
+    let data: [KMBRouteETA]
+}
+
+struct KMBRouteETA: Codable, Hashable {
+    let co: String
+    let route: String
+    let dir: String
+    let serviceType: Int
+    let seq: Int
+    let destTc: String
+    let destSc: String
+    let destEn: String
+    let etaSeq: Int
+    let eta: String
+    let rmkTc: String
+    let rmkSc: String
+    let rmkEn: String
+    let dataTimestamp: String
+}
+
 class GlobalData: ObservableObject{
     @Published var globalRoutes: [KMBRoute] = []
     @Published var globalStops: [KMBStop] = []
     @Published var nearbyStops: [KMBStop] = []
     @Published var nearbyRoutes: Set<KMBRoute> = []
+    @Published var globalRouteStop: [KMBRouteStop] = []
 }
 
+struct RouteRow: Hashable{
+    var seq: String
+    var stop: KMBStop
+    var routeETA: [KMBRouteETA]
+    var distance: Float
+}
 
 enum NetworkError: Error{
     case invalidURL

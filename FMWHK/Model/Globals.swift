@@ -60,11 +60,11 @@ struct ViewIdentifier: Identifiable {
     let view: AnyView
 }
 
-class showTitle: ObservableObject {
-    @Published var showTitle: Bool
+class ShowMenuBtn: ObservableObject {
+    @Published var isShow: Bool
     
-    init(_ showTitle: Bool) {
-        self.showTitle = showTitle
+    init(_ isShow: Bool) {
+        self.isShow = isShow
     }
 }
 
@@ -125,6 +125,26 @@ extension Date {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
 
+}
+
+func getTimeFrom(stringDate: String) -> Date? {
+    let dateFormatter = ISO8601DateFormatter()
+    return dateFormatter.date(from:stringDate)
+}
+
+func getMinTo(time: String) -> String {
+    guard let targetTime = getTimeFrom(stringDate: time) else {
+        return "No scheduled departure at this moment"
+    }
+    
+    let delta = targetTime - Date()
+    
+    if delta == 0 {
+        return "-"
+    } else {
+        let formatter = DateComponentsFormatter()
+        return formatter.string(from: delta) ?? "Invalid Time"
+    }
 }
 
 class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {

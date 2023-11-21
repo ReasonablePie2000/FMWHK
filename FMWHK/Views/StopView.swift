@@ -10,7 +10,8 @@ import SwiftUI
 struct StopView: View {
     let stop: KMBStop
     @State var stopETAList: [KMBStopETA]?
-    @EnvironmentObject var isShowTitle: showTitle
+    @EnvironmentObject var showMenuBtn: ShowMenuBtn
+    @EnvironmentObject var globalData: GlobalData
     @Environment(\.presentationMode) var presentationMode
     
     init(stop: KMBStop) {
@@ -40,7 +41,7 @@ struct StopView: View {
                     .padding()
                 }
             }
-            .onAppear{isShowTitle.showTitle = false}
+            .onAppear{showMenuBtn.isShow = false}
             .task{
                 do {
                     stopETAList = try await getStopETAData(stopID: stop.stop)
@@ -62,10 +63,11 @@ struct StopView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 HStack{
                     Button {
-                        isShowTitle.showTitle = true
+                        showMenuBtn.isShow = true
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
+                            .foregroundColor(.white)
                     }
                     Text(stop.nameEn)
                         .foregroundStyle(.white)
@@ -75,26 +77,6 @@ struct StopView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-    }
-    
-    func getTimeFrom(stringDate: String) -> Date? {
-        let dateFormatter = ISO8601DateFormatter()
-        return dateFormatter.date(from:stringDate)
-    }
-    
-    func getMinTo(time: String) -> String {
-        guard let targetTime = getTimeFrom(stringDate: time) else {
-            return "No scheduled departure at this moment"
-        }
-        
-        let delta = targetTime - Date()
-        
-        if delta == 0 {
-            return "-"
-        } else {
-            let formatter = DateComponentsFormatter()
-            return formatter.string(from: delta) ?? "Invalid Time"
-        }
     }
 }
 

@@ -10,7 +10,7 @@ struct ContentView: View {
     @State var isDrawerOpen: Bool = false
     @State var selectedViewIndex: Int = 0
     //@EnvironmentObject var titleNameOject: titleName
-    @EnvironmentObject var isShowTitle: showTitle
+    @EnvironmentObject var showMenuBtn: ShowMenuBtn
     
     let viewList: [ViewIdentifier] = menuViews
     
@@ -24,7 +24,7 @@ struct ContentView: View {
                     .offset(x: isDrawerOpen ? 0 : -UIScreen.main.bounds.width)
                 
                 VStack {
-                    if(isShowTitle.showTitle){
+                    if(showMenuBtn.isShow){
                         HStack {
                             Button(action: {
                                 withAnimation {

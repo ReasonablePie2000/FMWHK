@@ -101,6 +101,31 @@ func getStopETAData(stopID : String) async throws -> [KMBStopETA] {
     }
 }
 
+func getRouteETAData(route: String, serviceType: String, bound: String) async throws -> [KMBRouteETA] {
+    let endpoint = "https://data.etabus.gov.hk/v1/transport/kmb/route-eta/\(route)/\(serviceType)"
+    
+    guard let url = URL(string: endpoint) else {
+        throw NetworkError.invalidURL
+    }
+    
+    let (data, response) = try await URLSession.shared.data(from: url)
+    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        throw NetworkError.invalidResponse
+    }
+    
+    do {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let routeETAList = try decoder.decode(KMBRouteETAList.self, from: data)
+        
+        let filteredRouteETAList = routeETAList.data.filter { $0.dir == bound }
+        return filteredRouteETAList
+    } catch {
+        print("Error info: \(error)")
+        throw NetworkError.invalidData
+    }
+}
+
 func getNearestStops(_ stopList: [KMBStop], k: Int, srcCoordinate: CLLocation) -> [KMBStop] {
     var resultStopList: [KMBStop] = []
     var resultStopIDList: [String] = []
