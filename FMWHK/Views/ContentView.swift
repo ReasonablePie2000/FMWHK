@@ -123,6 +123,3 @@ struct DrawerView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}

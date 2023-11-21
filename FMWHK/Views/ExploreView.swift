@@ -6,22 +6,10 @@
 //
 
 import SwiftUI
-
-struct ExploreView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    ExploreView()
-}
-
-import SwiftUI
 import MapKit
 
 
-struct ContentView:View {
+struct ExploreView:View {
    
     
     let lyh = CLLocationCoordinate2D(
@@ -37,7 +25,6 @@ struct ContentView:View {
         latitude: 22.28306337971004, longitude: 114.135406794366)
     let eh = CLLocationCoordinate2D(
         latitude: 22.28254200737399, longitude: 114.13974252320251)
-   
     let hkw = CLLocationCoordinate2D(
         latitude: 22.282939102246427, longitude: 114.13670858347567)
     let ml = CLLocationCoordinate2D(
@@ -48,43 +35,29 @@ struct ContentView:View {
         latitude: 22.28397262458758, longitude: 114.13422906552947)
     
     var body: some View {
-        
-        
-        
         Map{
-        
-        
-        Marker("LYH", systemImage: "building" ,coordinate: lyh )
+            Marker("LYH", systemImage: "building" ,coordinate: lyh )
                 .tint(.green)
-        Marker("CYT", systemImage: "building", coordinate: cyt )
+            Marker("CYT", systemImage: "building", coordinate: cyt )
                 .tint(.gray)
-        Marker("CW", systemImage: "building", coordinate: cw )
+            Marker("CW", systemImage: "building", coordinate: cw )
                 .tint(.orange)
-        Marker("CYM", systemImage: "building", coordinate: cym )
+            Marker("CYM", systemImage: "building", coordinate: cym )
                 .tint(.pink)
-        Marker("CYC", systemImage: "building", coordinate: cyc )
+            Marker("CYC", systemImage: "building", coordinate: cyc )
                 .tint(.brown)
-        Marker("EH", systemImage: "building", coordinate: eh )
+            Marker("EH", systemImage: "building", coordinate: eh )
                 .tint(.red)
-        Marker("HKW", systemImage: "building", coordinate: hkw )
+            Marker("HKW", systemImage: "building", coordinate: hkw )
                 .tint(.yellow)
-        Marker("ML", systemImage: "book", coordinate: ml )
+            Marker("ML", systemImage: "book", coordinate: ml )
                 .tint(.purple)
-        Marker("LILY", systemImage: "building", coordinate: lily)
+            Marker("LILY", systemImage: "building", coordinate: lily)
                 .tint(.cyan)
-        Marker("VC", systemImage: "building", coordinate: vc)
+            Marker("VC", systemImage: "building", coordinate: vc)
                 .tint(.white)
-            
-            
-            
-            }
-        
         }
-        
     }
-
-
-
-#Preview {
-    ContentView()
+    
 }
+
