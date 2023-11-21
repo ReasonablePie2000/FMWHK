@@ -79,9 +79,10 @@ class titleName: ObservableObject {
 let menuViews = [
     ViewIdentifier(id: 0, name: "Home", view: AnyView(NearbyRoutesView())),
     ViewIdentifier(id: 1, name: "Nearby Stops", view: AnyView(StopListView())),
-    ViewIdentifier(id: 2, name: "Favourite", view: AnyView(FavouriteView())),
-    ViewIdentifier(id: 3, name: "Reminder", view: AnyView(ReminderView())),
-    ViewIdentifier(id: 4, name: "Profile", view: AnyView(ProfileView())),
+    ViewIdentifier(id: 2, name: "Explore", view: AnyView(ExploreView())),
+    ViewIdentifier(id: 3, name: "Favourite", view: AnyView(FavouriteView())),
+    ViewIdentifier(id: 4, name: "Reminder", view: AnyView(ReminderView())),
+    ViewIdentifier(id: 5, name: "Profile", view: AnyView(ProfileView())),
 ]
 
 struct ScrollingText: View {

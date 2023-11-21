@@ -18,7 +18,7 @@ struct NearbyRoutesView: View {
                 ScrollView {
                     VStack{
                         Spacer()
-                        ForEach(Array(globalData.nearbyRoutes), id: \.self) { route in
+                        ForEach(Array(globalData.nearbyRoutes).sorted(by: { $0.route < $1.route }), id: \.self) { route in
                             NavigationLink(destination: RouteView(route: route)) {
                                 VStack {
                                     RouteRowView(route: route)

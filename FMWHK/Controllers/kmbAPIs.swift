@@ -168,3 +168,6 @@ func getNearestRoutes(_ stopList: [KMBStop]) async throws -> Set<KMBRoute> {
     return routes
 }
 
+func getETA(stop: KMBStop, route: KMBRoute){
+    
+}

@@ -22,6 +22,7 @@
 		C47A72272B0CF63500121CAB /* kmbAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72262B0CF63500121CAB /* kmbAPIs.swift */; };
 		C47A72292B0CFA8600121CAB /* NearbyRoutesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */; };
 		C47A722C2B0D208A00121CAB /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A722B2B0D208A00121CAB /* RouteView.swift */; };
+		C47A722E2B0D2A6B00121CAB /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A722D2B0D2A6B00121CAB /* ExploreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyRoutesView.swift; sourceTree = "<group>"; };
 		C47A722A2B0CFE8000121CAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C47A722B2B0D208A00121CAB /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		C47A722D2B0D2A6B00121CAB /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				C47A72232B0B5B1E00121CAB /* FavouriteView.swift */,
 				C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */,
 				C47A722B2B0D208A00121CAB /* RouteView.swift */,
+				C47A722D2B0D2A6B00121CAB /* ExploreView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C47A722E2B0D2A6B00121CAB /* ExploreView.swift in Sources */,
 				C47A72132B0B3F3400121CAB /* BusRoutes.swift in Sources */,
 				C47A72202B0B5AF900121CAB /* ProfileView.swift in Sources */,
 				C47A721C2B0B4B0E00121CAB /* StopListView.swift in Sources */,
