@@ -7,7 +7,9 @@
 
 import Foundation
 import SwiftUI
-
+import CoreLocation
+import MapKit
+import SwiftUI
 
 let mainBkColor = Color(hex: "101010")
 let lightBkColor = Color(hex: "424242")
@@ -58,16 +60,24 @@ struct ViewIdentifier: Identifiable {
     let view: AnyView
 }
 
-class ViewRouter: ObservableObject {
-    @Published var showMainMenu: Bool
+class showTitle: ObservableObject {
+    @Published var showTitle: Bool
     
-    init(_ showMainMenu: Bool) {
-        self.showMainMenu = showMainMenu
+    init(_ showTitle: Bool) {
+        self.showTitle = showTitle
+    }
+}
+
+class titleName: ObservableObject {
+    @Published var name: String
+    
+    init(_ name: String) {
+        self.name = name
     }
 }
 
 let menuViews = [
-    ViewIdentifier(id: 0, name: "Home", view: AnyView(StopListView())),
+    ViewIdentifier(id: 0, name: "Home", view: AnyView(NearbyRoutesView())),
     ViewIdentifier(id: 1, name: "Nearby Stops", view: AnyView(StopListView())),
     ViewIdentifier(id: 2, name: "Favourite", view: AnyView(FavouriteView())),
     ViewIdentifier(id: 3, name: "Reminder", view: AnyView(ReminderView())),
@@ -102,3 +112,40 @@ struct ScrollingText: View {
         return textWidth > self.width
     }
 }
+
+extension UIScreen {
+   static let screenWidth = UIScreen.main.bounds.size.width
+   static let screenHeight = UIScreen.main.bounds.size.height
+   static let screenSize = UIScreen.main.bounds.size
+}
+
+extension Date {
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
+
+}
+
+class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
+    private let locationManager = CLLocationManager()
+    @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 22.282999, longitude: 114.137085), latitudinalMeters: 500, longitudinalMeters: 500)
+    
+    override init() {
+        super.init()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        region.center.latitude = locations[0].coordinate.latitude
+        region.center.longitude = locations[0].coordinate.longitude
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager){
+        if(locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse){
+            locationManager.startUpdatingLocation()
+        }
+    }
+}
+

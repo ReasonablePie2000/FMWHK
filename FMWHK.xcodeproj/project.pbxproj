@@ -14,12 +14,14 @@
 		C47A72132B0B3F3400121CAB /* BusRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72122B0B3F3400121CAB /* BusRoutes.swift */; };
 		C47A72162B0B404B00121CAB /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72152B0B404B00121CAB /* StopView.swift */; };
 		C47A72182B0B406C00121CAB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72172B0B406C00121CAB /* MapView.swift */; };
-		C47A721A2B0B408600121CAB /* TmpData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72192B0B408600121CAB /* TmpData.swift */; };
 		C47A721C2B0B4B0E00121CAB /* StopListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A721B2B0B4B0E00121CAB /* StopListView.swift */; };
 		C47A721E2B0B4E6B00121CAB /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A721D2B0B4E6B00121CAB /* Globals.swift */; };
 		C47A72202B0B5AF900121CAB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A721F2B0B5AF900121CAB /* ProfileView.swift */; };
 		C47A72222B0B5B0D00121CAB /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72212B0B5B0D00121CAB /* ReminderView.swift */; };
 		C47A72242B0B5B1E00121CAB /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72232B0B5B1E00121CAB /* FavouriteView.swift */; };
+		C47A72272B0CF63500121CAB /* kmbAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72262B0CF63500121CAB /* kmbAPIs.swift */; };
+		C47A72292B0CFA8600121CAB /* NearbyRoutesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */; };
+		C47A722C2B0D208A00121CAB /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A722B2B0D208A00121CAB /* RouteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,12 +34,15 @@
 		C47A72122B0B3F3400121CAB /* BusRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusRoutes.swift; sourceTree = "<group>"; };
 		C47A72152B0B404B00121CAB /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		C47A72172B0B406C00121CAB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		C47A72192B0B408600121CAB /* TmpData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpData.swift; sourceTree = "<group>"; };
 		C47A721B2B0B4B0E00121CAB /* StopListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopListView.swift; sourceTree = "<group>"; };
 		C47A721D2B0B4E6B00121CAB /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		C47A721F2B0B5AF900121CAB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C47A72212B0B5B0D00121CAB /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		C47A72232B0B5B1E00121CAB /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
+		C47A72262B0CF63500121CAB /* kmbAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kmbAPIs.swift; sourceTree = "<group>"; };
+		C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyRoutesView.swift; sourceTree = "<group>"; };
+		C47A722A2B0CFE8000121CAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C47A722B2B0D208A00121CAB /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,13 +75,14 @@
 		C442C5672B0747AA00888EEF /* FMWHK */ = {
 			isa = PBXGroup;
 			children = (
+				C47A722A2B0CFE8000121CAB /* Info.plist */,
+				C47A72252B0CF61000121CAB /* Controllers */,
 				C47A72142B0B3FB100121CAB /* Views */,
 				C47A72112B0B3EFB00121CAB /* Model */,
 				C442C5682B0747AA00888EEF /* FMWHKApp.swift */,
 				C442C56C2B0747AB00888EEF /* Assets.xcassets */,
 				C442C56E2B0747AB00888EEF /* FMWHK.entitlements */,
 				C442C56F2B0747AB00888EEF /* Preview Content */,
-				C47A72192B0B408600121CAB /* TmpData.swift */,
 			);
 			path = FMWHK;
 			sourceTree = "<group>";
@@ -108,8 +114,18 @@
 				C47A721F2B0B5AF900121CAB /* ProfileView.swift */,
 				C47A72212B0B5B0D00121CAB /* ReminderView.swift */,
 				C47A72232B0B5B1E00121CAB /* FavouriteView.swift */,
+				C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */,
+				C47A722B2B0D208A00121CAB /* RouteView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C47A72252B0CF61000121CAB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C47A72262B0CF63500121CAB /* kmbAPIs.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,14 +201,16 @@
 				C47A72132B0B3F3400121CAB /* BusRoutes.swift in Sources */,
 				C47A72202B0B5AF900121CAB /* ProfileView.swift in Sources */,
 				C47A721C2B0B4B0E00121CAB /* StopListView.swift in Sources */,
+				C47A72272B0CF63500121CAB /* kmbAPIs.swift in Sources */,
 				C442C56B2B0747AA00888EEF /* ContentView.swift in Sources */,
 				C47A72182B0B406C00121CAB /* MapView.swift in Sources */,
+				C47A722C2B0D208A00121CAB /* RouteView.swift in Sources */,
 				C47A721E2B0B4E6B00121CAB /* Globals.swift in Sources */,
 				C47A72222B0B5B0D00121CAB /* ReminderView.swift in Sources */,
+				C47A72292B0CFA8600121CAB /* NearbyRoutesView.swift in Sources */,
 				C47A72242B0B5B1E00121CAB /* FavouriteView.swift in Sources */,
 				C47A72162B0B404B00121CAB /* StopView.swift in Sources */,
 				C442C5692B0747AA00888EEF /* FMWHKApp.swift in Sources */,
-				C47A721A2B0B408600121CAB /* TmpData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +344,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FMWHK/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -364,6 +383,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FMWHK/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
