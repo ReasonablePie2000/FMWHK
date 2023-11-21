@@ -14,6 +14,7 @@ struct StopListView: View {
     @State var stopList: [Stop]?
     @State var nearestStopList: [Stop]?
     @StateObject var locationManager = LocationManager()
+    
     var userLocation: CLLocation {
         return CLLocation(latitude: locationManager.lastLocation?.coordinate.latitude ?? curLocation.coordinate.latitude, longitude: locationManager.lastLocation?.coordinate.longitude ?? curLocation.coordinate.longitude)
     }
@@ -28,35 +29,42 @@ struct StopListView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack{
-                    ForEach(nearestStopList ?? [], id: \.stop) { stop in
-                        NavigationLink(destination: StopView(stop: stop)) {
-                            VStack {
-                                StopRowView(stop: stop)
-                                    .frame(width: UIScreen.screenWidth, height: 100)
+            ZStack {
+                mainBkColor.ignoresSafeArea()
+                ScrollView {
+                    VStack{
+                        Spacer()
+                        ForEach(nearestStopList ?? [], id: \.stop) { stop in
+                            NavigationLink(destination: StopView(stop: stop)) {
+                                VStack {
+                                    StopRowView(stop: stop)
+                                        .frame(width: UIScreen.screenWidth * 0.9, height: 80)
+                                        .background(lightBkColor)
+                                        .cornerRadius(10)
+                                        .padding(10)
+                                }
                             }
                         }
                     }
-                }
-                .task{
-                    do {
-                        stopList = try await getStopData()
-                        nearestStopList = getNearestStops(stopList ?? [], k: 10, srcCoordinate: userLocation)
-                        print("\(userLatitude)")
-                        print("\(userLongitude)")
-                    } catch NetworkError.invalidURL {
-                        print("invalid URL")
-                    } catch NetworkError.invalidResponse {
-                        print("invalid response")
-                    } catch NetworkError.invalidData {
-                        print("invalid data")
-                    } catch {
-                        print("unexpected error")
+                    .task{
+                        do {
+                            stopList = try await getStopData()
+                            nearestStopList = getNearestStops(stopList ?? [], k: 10, srcCoordinate: userLocation)
+                            print("\(userLatitude)")
+                            print("\(userLongitude)")
+                        } catch NetworkError.invalidURL {
+                            print("invalid URL")
+                        } catch NetworkError.invalidResponse {
+                            print("invalid response")
+                        } catch NetworkError.invalidData {
+                            print("invalid data")
+                        } catch {
+                            print("unexpected error")
+                        }
                     }
                 }
+                .scrollIndicators(.hidden)
             }
-            .scrollIndicators(.hidden)
         }
     }
 }

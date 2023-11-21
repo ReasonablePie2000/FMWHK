@@ -9,43 +9,55 @@ import SwiftUI
 struct ContentView: View {
     @State var isDrawerOpen: Bool = false
     @State var selectedViewIndex: Int = 0
+    //@EnvironmentObject var viewRouter: ViewRouter
     
     let views: [ViewIdentifier] = menuViews
     
     var body: some View {
-        ZStack {
-            // Main View based on selectedView
-            Group {
-                views[selectedViewIndex].view
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.white)
-            .disabled(isDrawerOpen)
-            
-            // Drawer Button
-            VStack {
-                HStack {
-                    Button(action: {
-                        withAnimation {
-                            self.isDrawerOpen.toggle()
+            ZStack {
+                mainBkColor
+                    .ignoresSafeArea()
+                
+                // Drawer View
+                DrawerView(isDrawerOpen: $isDrawerOpen, selectedViewIndex: $selectedViewIndex, views: views)
+                    .offset(x: isDrawerOpen ? 0 : -UIScreen.main.bounds.width)
+                
+                VStack {
+                    HStack {
+                        Button(action: {
+                            withAnimation {
+                                self.isDrawerOpen.toggle()
+                            }
+                        }) {
+                            Image(systemName: "line.horizontal.3")
+                                .imageScale(.large)
+                                .bold()
+                                .foregroundColor(mainColor)
+                                .padding()
                         }
-                    }) {
-                        Image(systemName: "line.horizontal.3")
-                            .imageScale(.large)
-                            .foregroundColor(mainColor)
-                            .padding()
+                        //.hidden(viewRouter.showMainMenu)
+                        
+                        Text(views[selectedViewIndex].name)
+                            .font(.title)
+                            .bold()
+                            .foregroundStyle(.white)
+                        Spacer()
                     }
-                    Spacer()
+                    
+                    ForEach(views.indices, id: \.self) { index in
+                        if index == selectedViewIndex {
+                            views[index].view
+                                .navigationBarTitle("", displayMode: .inline)
+                                .navigationBarHidden(true)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .background(mainBkColor)
+                        }
+                    }
+                    .hidden(isDrawerOpen)
                 }
-                Spacer()
+                .zIndex(1)
             }
-            .zIndex(1)
-            
-            // Drawer View
-            DrawerView(isDrawerOpen: $isDrawerOpen, selectedViewIndex: $selectedViewIndex, views: views)
-                .offset(x: isDrawerOpen ? 0 : -UIScreen.main.bounds.width)
         }
-    }
 }
 
 struct DrawerView: View {

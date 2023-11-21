@@ -40,16 +40,65 @@ extension Color {
     }
 }
 
+extension View {
+    @ViewBuilder
+    func hidden(_ shouldHide: Bool) -> some View {
+        if shouldHide {
+            self.hidden()
+        }
+        else{
+            self
+        }
+    }
+}
+
 struct ViewIdentifier: Identifiable {
     let id: Int
     let name: String
     let view: AnyView
 }
 
+class ViewRouter: ObservableObject {
+    @Published var showMainMenu: Bool
+    
+    init(_ showMainMenu: Bool) {
+        self.showMainMenu = showMainMenu
+    }
+}
+
 let menuViews = [
-    ViewIdentifier(id: 0, name: "Home", view: AnyView(Text("Home Screen"))),
+    ViewIdentifier(id: 0, name: "Home", view: AnyView(StopListView())),
     ViewIdentifier(id: 1, name: "Nearby Stops", view: AnyView(StopListView())),
     ViewIdentifier(id: 2, name: "Favourite", view: AnyView(FavouriteView())),
     ViewIdentifier(id: 3, name: "Reminder", view: AnyView(ReminderView())),
     ViewIdentifier(id: 4, name: "Profile", view: AnyView(ProfileView())),
 ]
+
+struct ScrollingText: View {
+    @State private var animate = false
+    let text: Text
+    let width: CGFloat
+
+    var body: some View {
+        GeometryReader { outerGeometry in
+            GeometryReader { geometry in
+                self.text
+                    .fixedSize()
+                    .offset(x: self.shouldAnimate(textWidth: geometry.size.width) ? (self.animate ? -geometry.size.width - 10 : outerGeometry.size.width + 10) : 0)
+                    .onAppear {
+                        if self.shouldAnimate(textWidth: geometry.size.width) {
+                            withAnimation(Animation.linear(duration: 5).repeatForever(autoreverses: false)) {
+                                self.animate = true
+                            }
+                        }
+                    }
+            }
+        }
+        .frame(width: self.width, height: 50, alignment: .center) // adjust height as needed
+        .mask(Rectangle())
+    }
+
+    private func shouldAnimate(textWidth: CGFloat) -> Bool {
+        return textWidth > self.width
+    }
+}

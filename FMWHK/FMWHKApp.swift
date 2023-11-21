@@ -11,7 +11,8 @@ import SwiftUI
 struct FMWHKApp: App {
     var body: some Scene {
         WindowGroup {
-                ContentView()
+            ContentView()
+                .environmentObject(ViewRouter(false))
         }
     }
 }
