@@ -61,3 +61,38 @@ struct ExploreView:View {
     
 }
 
+
+
+Import SwiftUI
+Import MapKit
+Import Contacts
+
+Struct ContentView: View{
+
+@State private var searchText:String=""
+    @State private var showAlert = false
+    @State private var errorTitle = ""
+    @State private var errorMessage = ""
+    @State private var mapItem:MKMapItem?
+    @State private var placemark: CLPlacemark?
+
+Var body: some View{
+Form{
+ Section(header:Text(“Location”)) {
+TextField(“Where do you want to search?” , text: $searchText)
+Button( action:{
+ searchPlaces()
+}) {
+HStack(alignment : .center) {
+ Spacer() ; Text(“Search”) ; Spacer()
+}
+} .alert(isPresented: $showAlert) {
+Alert(title: Text(errorTiltle), message:
+  Text(errorMessage))
+}
+} 
+Section(hear: Text(“Result”) {
+  Text(result).lineLimit(5)
+
+
+
