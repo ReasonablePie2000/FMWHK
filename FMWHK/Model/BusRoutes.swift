@@ -108,7 +108,7 @@ struct KMBRouteETA: Codable, Hashable {
     let destSc: String
     let destEn: String
     let etaSeq: Int
-    let eta: String
+    let eta: String?
     let rmkTc: String
     let rmkSc: String
     let rmkEn: String
@@ -119,11 +119,64 @@ class GlobalData: ObservableObject{
     @Published var globalRoutes: [KMBRoute] = []
     @Published var globalStops: [KMBStop] = []
     @Published var nearbyStops: [KMBStop] = []
-    @Published var nearbyRoutes: Set<KMBRoute> = []
+    @Published var nearbyRoutes: [KMBNearbyRouteItemModel] = []
     @Published var globalRouteStop: [KMBRouteStop] = []
+    @Published var locationManager: LocationManager = LocationManager()
+    @Published var progress: Float = 0.0
+    
+    func updateAll() async {
+        do {
+            let newGlobalRoutes = try await getRouteData()
+            DispatchQueue.main.async {
+                self.progress = 0.2
+            }
+            
+            let newGlobalStops = try await getStopData()
+            DispatchQueue.main.async {
+                self.progress = 0.4
+            }
+            
+            let newNearbyStops = getNearestStops(newGlobalStops, k: 5, srcCoordinate: CLLocation(latitude: locationManager.region.center.latitude, longitude: locationManager.region.center.longitude))
+            DispatchQueue.main.async {
+                self.progress = 0.6
+            }
+            let newGlobalRouteStop = try await getRouteStopData()
+            DispatchQueue.main.async {
+                self.progress = 0.8
+            }
+            
+            let newNearbyRoutes = try await getNearestRoutes(newNearbyStops, globalData: self)
+            DispatchQueue.main.async {
+                self.progress = 1.0
+            }
+
+            DispatchQueue.main.async {
+                self.globalRoutes = newGlobalRoutes
+                self.globalStops = newGlobalStops
+                self.nearbyStops = newNearbyStops
+                self.globalRouteStop = newGlobalRouteStop
+                self.nearbyRoutes = newNearbyRoutes
+            }
+            
+            print("self.nearbyRoutes.count: \(self.nearbyRoutes.count)")
+        } catch NetworkError.invalidURL {
+            print("invalid URL")
+        } catch NetworkError.invalidResponse {
+            print("invalid response")
+        } catch NetworkError.invalidData {
+            print("invalid data")
+        } catch {
+            print("Failed to fetch data: \(error)")
+        }
+    }
 }
 
-struct RouteRow: Hashable{
+struct KMBNearbyRouteItemModel: Hashable{
+    var route: KMBRoute
+    var routeStop: RouteStopModel
+}
+
+struct RouteStopModel: Hashable{
     var seq: String
     var stop: KMBStop
     var routeETA: [KMBRouteETA]

@@ -9,12 +9,13 @@ import SwiftUI
 struct ContentView: View {
     @State var isDrawerOpen: Bool = false
     @State var selectedViewIndex: Int = 0
-    //@EnvironmentObject var titleNameOject: titleName
     @EnvironmentObject var showMenuBtn: ShowMenuBtn
+    @State private var isLandingPageDone: Bool = false
     
     let viewList: [ViewIdentifier] = menuViews
     
     var body: some View {
+        if isLandingPageDone {
             ZStack {
                 mainBkColor
                     .ignoresSafeArea()
@@ -82,14 +83,15 @@ struct ContentView: View {
                 }
                 .zIndex(1)
             }
-        
+        } else {
+            LandingView(isLandingPageDone: $isLandingPageDone)
         }
+    }
 }
 
 struct DrawerView: View {
     @Binding var isDrawerOpen: Bool
     @Binding var selectedViewIndex: Int
-    @EnvironmentObject var titleNameOject: titleName
     let views: [ViewIdentifier]
     
     var body: some View {
@@ -100,7 +102,6 @@ struct DrawerView: View {
                 Spacer()
                 ForEach(views) { view in
                     Button(action: {
-                        titleNameOject.name = views[selectedViewIndex].name
                         withAnimation {
                             self.isDrawerOpen = false
                             self.selectedViewIndex = view.id

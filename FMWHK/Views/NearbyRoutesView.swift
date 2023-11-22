@@ -10,6 +10,7 @@ import SwiftUI
 struct NearbyRoutesView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var globalData: GlobalData
+    @State var timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationView {
@@ -18,10 +19,10 @@ struct NearbyRoutesView: View {
                 ScrollView {
                     VStack{
                         Spacer()
-                        ForEach(Array(globalData.nearbyRoutes).sorted(by: { $0.route < $1.route }), id: \.self) { route in
-                            NavigationLink(destination: RouteView(route: route)) {
+                        ForEach(globalData.nearbyRoutes.sorted(by: { $0.routeStop.seq < $1.routeStop.seq }), id: \.self) { route in
+                            NavigationLink(destination: RouteView(route: route.route)) {
                                 VStack {
-                                    RouteRowView(route: route)
+                                    RouteRowView(route: route.route)
                                         .frame(width: UIScreen.screenWidth * 0.9, height: 80)
                                         .background(lightBkColor)
                                         .cornerRadius(10)
@@ -32,6 +33,19 @@ struct NearbyRoutesView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+                .onAppear {
+                    Task{
+                        await globalData.updateAll()
+                    }
+                }
+                .refreshable {
+                    await globalData.updateAll()
+                }
+                .onReceive(timer) { _ in
+                    Task{
+                        await globalData.updateAll()
+                    }
+                }
             }
         }
     }

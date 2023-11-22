@@ -68,7 +68,7 @@ class ShowMenuBtn: ObservableObject {
     }
 }
 
-class titleName: ObservableObject {
+class TitleName: ObservableObject {
     @Published var name: String
     
     init(_ name: String) {
@@ -143,6 +143,7 @@ func getMinTo(time: String) -> String {
         return "-"
     } else {
         let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = delta >= 3600 ? [.hour, .minute] : [.minute]
         return formatter.string(from: delta) ?? "Invalid Time"
     }
 }

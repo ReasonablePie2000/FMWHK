@@ -35,6 +35,9 @@ struct StopListView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
+                .refreshable {
+                    await globalData.updateAll()
+                }
             }
         }
     }

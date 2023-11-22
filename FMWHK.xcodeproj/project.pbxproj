@@ -23,6 +23,7 @@
 		C47A72292B0CFA8600121CAB /* NearbyRoutesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A72282B0CFA8600121CAB /* NearbyRoutesView.swift */; };
 		C47A722C2B0D208A00121CAB /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A722B2B0D208A00121CAB /* RouteView.swift */; };
 		C47A722E2B0D2A6B00121CAB /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A722D2B0D2A6B00121CAB /* ExploreView.swift */; };
+		C47A72302B0E2B6C00121CAB /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47A722F2B0E2B6C00121CAB /* LandingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		C47A722A2B0CFE8000121CAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C47A722B2B0D208A00121CAB /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		C47A722D2B0D2A6B00121CAB /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		C47A722F2B0E2B6C00121CAB /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				C442C56A2B0747AA00888EEF /* ContentView.swift */,
+				C47A722F2B0E2B6C00121CAB /* LandingView.swift */,
 				C47A72152B0B404B00121CAB /* StopView.swift */,
 				C47A72172B0B406C00121CAB /* MapView.swift */,
 				C47A721B2B0B4B0E00121CAB /* StopListView.swift */,
@@ -207,6 +210,7 @@
 				C47A721C2B0B4B0E00121CAB /* StopListView.swift in Sources */,
 				C47A72272B0CF63500121CAB /* kmbAPIs.swift in Sources */,
 				C442C56B2B0747AA00888EEF /* ContentView.swift in Sources */,
+				C47A72302B0E2B6C00121CAB /* LandingView.swift in Sources */,
 				C47A72182B0B406C00121CAB /* MapView.swift in Sources */,
 				C47A722C2B0D208A00121CAB /* RouteView.swift in Sources */,
 				C47A721E2B0B4E6B00121CAB /* Globals.swift in Sources */,
