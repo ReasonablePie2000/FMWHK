@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NearbyRoutesView: View {
-    @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var globalData: GlobalData
+    
     @State var timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
     
     var body: some View {

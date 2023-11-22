@@ -9,42 +9,31 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    var coordinate: CLLocationCoordinate2D
-    var delta: Double
+    @EnvironmentObject var globalData: GlobalData
+    var center: CLLocationCoordinate2D
+    var span: Float
+    var locations: [IdentifiableLocation]
     
-    @State private var region = MKCoordinateRegion()
-    
-    struct MapAnnotation: Identifiable {
-        let id = UUID()
-        let coordinate: CLLocationCoordinate2D
-    }
-    
-    @State private var annotations = [MapAnnotation]()
     
     var body: some View {
-        Map(coordinateRegion: $region,
-            annotationItems: annotations,
-            annotationContent: { item in
-                MapMarker(coordinate: item.coordinate)
-            })
-        .onAppear {
-            setRegion(coordinate)
-            annotations.append(MapAnnotation(coordinate: coordinate))
+        Map(coordinateRegion: .constant(MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(span), longitudeDelta: CLLocationDegrees(span)))),
+            annotationItems: locations) { location in
+            MapAnnotation(coordinate: location.coordinate) {
+                VStack {
+                    Image(systemName: location.pinImage)
+                        .foregroundColor(.green)
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(mainColor)
+                        .background(mainBkColor)
+                        .clipShape(Circle())
+                    Text(location.text)
+                        .foregroundColor(mainColor)
+                        .font(.caption)
+                        .bold()
+                        .shadow(color: .black, radius: 1)
+                }
+            }
         }
-    }
-    
-    private func setRegion(_ coordinate: CLLocationCoordinate2D) {
-        region = MKCoordinateRegion(
-            center: coordinate,
-            span: MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
-        )
-    }
-}
-
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView(coordinate: CLLocationCoordinate2D(latitude: 22.37407, longitude: 113.99123), delta: 0.003)
-
     }
 }
 

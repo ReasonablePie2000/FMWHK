@@ -157,8 +157,6 @@ class GlobalData: ObservableObject{
                 self.globalRouteStop = newGlobalRouteStop
                 self.nearbyRoutes = newNearbyRoutes
             }
-            
-            print("self.nearbyRoutes.count: \(self.nearbyRoutes.count)")
         } catch NetworkError.invalidURL {
             print("invalid URL")
         } catch NetworkError.invalidResponse {

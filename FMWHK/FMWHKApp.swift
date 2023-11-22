@@ -11,14 +11,17 @@ import CoreLocation
 @main
 struct FMWHKApp: App {
     @StateObject private var globalData = GlobalData()
-    @StateObject private var showMenuBtn = ShowMenuBtn(true)
+    @StateObject private var userData = UserData()
+    @StateObject private var menuBarOject = MenuBarOject()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(globalData)
-                .environmentObject(showMenuBtn)
+                .environmentObject(userData)
+                .environmentObject(menuBarOject)
                 .task {
+                    await userData.checkIfLogin()
                     await globalData.updateAll()
                 }
         }

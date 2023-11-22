@@ -60,11 +60,18 @@ struct ViewIdentifier: Identifiable {
     let view: AnyView
 }
 
-class ShowMenuBtn: ObservableObject {
-    @Published var isShow: Bool
+class MenuBarOject: ObservableObject {
+    @Published var title: String
+    @Published var isShowMenuBtn: Bool
     
-    init(_ isShow: Bool) {
-        self.isShow = isShow
+    init() {
+        self.title = menuViews[0].name
+        self.isShowMenuBtn = true
+    }
+    
+    init(title: String, isShowMenuBtn: Bool) {
+        self.title = title
+        self.isShowMenuBtn = isShowMenuBtn
     }
 }
 
@@ -81,8 +88,9 @@ let menuViews = [
     ViewIdentifier(id: 1, name: "Nearby Stops", view: AnyView(StopListView())),
     ViewIdentifier(id: 2, name: "Explore", view: AnyView(ExploreView())),
     ViewIdentifier(id: 3, name: "Favourite", view: AnyView(FavouriteView())),
-    ViewIdentifier(id: 4, name: "Reminder", view: AnyView(ReminderView())),
-    ViewIdentifier(id: 5, name: "Profile", view: AnyView(ProfileView())),
+    ViewIdentifier(id: 4, name: "Share Location", view: AnyView(LocationSharingView())),
+    ViewIdentifier(id: 5, name: "Reminder", view: AnyView(ReminderView())),
+    ViewIdentifier(id: 6, name: "Profile", view: AnyView(ProfileView())),
 ]
 
 struct ScrollingText: View {
@@ -167,6 +175,56 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager){
         if(locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse){
             locationManager.startUpdatingLocation()
+        }
+    }
+}
+
+struct IdentifiableLocation: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+    let pinImage: String
+    let text: String
+}
+
+class UserData: ObservableObject{
+    @Published var isLoggedIn: Bool = false
+    @Published var userID: String = ""
+    @Published var userName: String = ""
+    @Published var userEmail: String = ""
+    @Published var userRole: String = ""
+    
+    
+    func checkIfLogin() async {
+        let (loginStatus, userAccount) = await CheckJWTLogin()
+        
+        if(loginStatus == LoginStatus.success){
+            DispatchQueue.main.async {
+                self.isLoggedIn = true
+                self.userID = String(userAccount!.user_id)
+                self.userName = userAccount!.user_name
+                self.userEmail = userAccount!.email
+                self.userRole = userAccount!.role
+            }
+        }
+    }
+    
+    func login(userAccount: UserAccount) async {
+        DispatchQueue.main.async {
+            self.isLoggedIn = true
+            self.userID = String(userAccount.user_id)
+            self.userName = userAccount.user_name
+            self.userEmail = userAccount.email
+            self.userRole = userAccount.role
+        }
+    }
+    
+    func logout() async {
+        DispatchQueue.main.async {
+            self.isLoggedIn = false
+            self.userID = ""
+            self.userName = ""
+            self.userEmail = ""
+            self.userRole = ""
         }
     }
 }

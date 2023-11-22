@@ -10,9 +10,10 @@ import SwiftUI
 struct StopView: View {
     let stop: KMBStop
     @State var stopETAList: [KMBStopETA]?
-    @EnvironmentObject var showMenuBtn: ShowMenuBtn
+    @EnvironmentObject var menuBarOject: MenuBarOject
     @EnvironmentObject var globalData: GlobalData
     @Environment(\.presentationMode) var presentationMode
+    @State private var locationList: [IdentifiableLocation] = []
     
     init(stop: KMBStop) {
         self.stop = stop
@@ -22,7 +23,7 @@ struct StopView: View {
     var body: some View {
         ScrollView {
             VStack{
-                MapView(coordinate: stop.location.coordinate, delta: 0.002)
+                MapView(center: stop.location.coordinate, span: 0.002, locations: locationList)
                     .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight/3)
                     .cornerRadius(10)
                     .padding(.top)
@@ -41,10 +42,15 @@ struct StopView: View {
                     .padding()
                 }
             }
-            .onAppear{showMenuBtn.isShow = false}
+            .onAppear {
+                menuBarOject.isShowMenuBtn = false
+                locationList = [IdentifiableLocation(coordinate: self.stop.location.coordinate, pinImage: "bus", text: stop.nameEn)]
+            }
             .task{
                 do {
                     stopETAList = try await getStopETAData(stopID: stop.stop)
+                    let groupedStops = Dictionary(grouping: stopETAList ?? [], by: { $0.route })
+                    
                 } catch NetworkError.invalidURL {
                     print("invalid URL")
                 } catch NetworkError.invalidResponse {
@@ -63,7 +69,7 @@ struct StopView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 HStack{
                     Button {
-                        showMenuBtn.isShow = true
+                        menuBarOject.isShowMenuBtn = true
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")

@@ -9,7 +9,7 @@ import SwiftUI
 struct ContentView: View {
     @State var isDrawerOpen: Bool = false
     @State var selectedViewIndex: Int = 0
-    @EnvironmentObject var showMenuBtn: ShowMenuBtn
+    @EnvironmentObject var menuBarOject: MenuBarOject
     @State private var isLandingPageDone: Bool = false
     
     let viewList: [ViewIdentifier] = menuViews
@@ -25,7 +25,7 @@ struct ContentView: View {
                     .offset(x: isDrawerOpen ? 0 : -UIScreen.main.bounds.width)
                 
                 VStack {
-                    if(showMenuBtn.isShow){
+                    if(menuBarOject.isShowMenuBtn){
                         HStack {
                             Button(action: {
                                 withAnimation {
@@ -41,7 +41,7 @@ struct ContentView: View {
                             .scaleEffect(1.5)
                             //.hidden(viewRouter.showMainMenu)
                             
-                            Text(viewList[selectedViewIndex].name)
+                            Text(menuBarOject.title)
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(.white)
@@ -74,7 +74,7 @@ struct ContentView: View {
                             }
                             .scaleEffect(1.5)
                             
-                            Text(viewList[selectedViewIndex].name)
+                            Text(menuBarOject.title)
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(.white)
@@ -92,6 +92,8 @@ struct ContentView: View {
 struct DrawerView: View {
     @Binding var isDrawerOpen: Bool
     @Binding var selectedViewIndex: Int
+    @EnvironmentObject var menuBarOject: MenuBarOject
+    
     let views: [ViewIdentifier]
     
     var body: some View {
@@ -105,6 +107,7 @@ struct DrawerView: View {
                         withAnimation {
                             self.isDrawerOpen = false
                             self.selectedViewIndex = view.id
+                            menuBarOject.title = view.name
                         }
                     }) {
                         Text(view.name)

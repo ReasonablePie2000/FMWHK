@@ -12,9 +12,10 @@ struct RouteView: View {
     let route: KMBRoute
     @State var routeStopList: [KMBStop]?
     @State var routeStopModelList: [RouteStopModel]?
-    @EnvironmentObject var showMenuBtn: ShowMenuBtn
+    @EnvironmentObject var menuBarOject: MenuBarOject
     @EnvironmentObject var globalData: GlobalData
     @Environment(\.presentationMode) var presentationMode
+    @State private var locationList: [IdentifiableLocation] = []
     
     init(route: KMBRoute) {
         self.route = route
@@ -24,7 +25,7 @@ struct RouteView: View {
     var body: some View {
         ScrollView {
             VStack{
-                MapView(coordinate: globalData.locationManager.region.center, delta: 0.002)
+                MapView(center: globalData.locationManager.region.center, span: 0.002, locations: locationList)
                     .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight/3)
                     .cornerRadius(10)
                     .padding(.top)
@@ -55,7 +56,10 @@ struct RouteView: View {
                     }
                 }
             }
-            .onAppear{showMenuBtn.isShow = false}
+            .onAppear{
+                menuBarOject.isShowMenuBtn = false
+                locationList = [IdentifiableLocation(coordinate: globalData.locationManager.region.center, pinImage: "person", text: "")]
+            }
             .task{
                 routeStopModelList = await getRouteStopModels(route, globalData: globalData)
                 routeStopList = getStopList(route, globalData: globalData)
@@ -68,7 +72,7 @@ struct RouteView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 HStack{
                     Button {
-                        showMenuBtn.isShow = true
+                        menuBarOject.isShowMenuBtn = true
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "chevron.backward")
