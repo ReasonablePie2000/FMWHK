@@ -2,7 +2,7 @@
 //  ExploreView.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 22/11/2023.
+//  Created by Sam Ng & Alex Kwok on 22/11/2023.
 //
 
 import SwiftUI
