@@ -2,8 +2,10 @@
 //  LoginView.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 23/11/2023.
-//
+// ELEC3644 Group 1
+// Team Member: LEE Cheuk Yin (3036037176)
+//              NG Kong Pang (3035721706)
+//              KWOK Yan Shing (3035994432)
 
 import SwiftUI
 
@@ -78,22 +80,22 @@ struct LoginView: View {
                         .cornerRadius(10)
                 }
                 
-                Button("Forgot password", action: {
-                    
-                })
-                .foregroundStyle(mainColor)
-                .padding()
-                .padding(.top, 50)
-                
-                HStack{
-                    Text("New user?")
-                        .foregroundStyle(.white)
-                    Button("Sign up", action: {
-                        
-                    })
-                    .foregroundStyle(mainColor)
-                }
-                .padding()
+//                Button("Forgot password", action: {
+//                    
+//                })
+//                .foregroundStyle(mainColor)
+//                .padding()
+//                .padding(.top, 50)
+//                
+//                HStack{
+//                    Text("New user?")
+//                        .foregroundStyle(.white)
+//                    Button("Sign up", action: {
+//                        
+//                    })
+//                    .foregroundStyle(mainColor)
+//                }
+//                .padding()
             }
         }
         .onAppear(){

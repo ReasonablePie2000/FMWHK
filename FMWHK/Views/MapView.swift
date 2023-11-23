@@ -2,8 +2,10 @@
 //  MapView.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 20/11/2023.
-//
+// ELEC3644 Group 1
+// Team Member: LEE Cheuk Yin (3036037176)
+//              NG Kong Pang (3035721706)
+//              KWOK Yan Shing (3035994432)
 
 import SwiftUI
 import MapKit
@@ -21,16 +23,15 @@ struct MapView: View {
             MapAnnotation(coordinate: location.coordinate) {
                 VStack {
                     Image(systemName: location.pinImage)
-                        .foregroundColor(.green)
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(mainColor)
-                        .background(mainBkColor)
+                        .foregroundColor(.white)
+                        .frame(width: 35, height: 35)
+                        .background(.red)
                         .clipShape(Circle())
                     Text(location.text)
-                        .foregroundColor(mainColor)
-                        .font(.caption)
+                        .foregroundColor(.white)
+                        .font(.title3)
                         .bold()
-                        .shadow(color: .black, radius: 1)
+                        .shadow(color: .black, radius: 2)
                 }
             }
         }

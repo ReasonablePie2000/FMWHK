@@ -2,8 +2,10 @@
 //  StopListView.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 20/11/2023.
-//
+// ELEC3644 Group 1
+// Team Member: LEE Cheuk Yin (3036037176)
+//              NG Kong Pang (3035721706)
+//              KWOK Yan Shing (3035994432)
 
 import SwiftUI
 import Foundation
@@ -26,7 +28,7 @@ struct StopListView: View {
                                 VStack {
                                     StopRowView(stop: stop)
                                         .frame(width: UIScreen.screenWidth * 0.9, height: 80)
-                                        .background(lightBkColor)
+                                        .background(mainBkColor)
                                         .cornerRadius(10)
                                         .padding(10)
                                 }
@@ -44,6 +46,6 @@ struct StopListView: View {
 }
 
 
-#Preview {
-    StopListView()
-}
+//#Preview {
+//    StopListView()
+//}

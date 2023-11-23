@@ -2,10 +2,13 @@
 //  UserAPIs.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 23/11/2023.
-//
+// ELEC3644 Group 1
+// Team Member: LEE Cheuk Yin (3036037176)
+//              NG Kong Pang (3035721706)
+//              KWOK Yan Shing (3035994432)
 
 import Foundation
+import CoreLocation
 
 let backendUrl = "https://elec3644_group1_backend.linksofrich.com"
 // User endpoints
@@ -18,12 +21,19 @@ let updateUserInfoEP = "/users/UpdateUserInfo";
 let deleteAccEP = "/users/DeleteUser";
 let checkNameEmailEP = "/users/CheckNameEmail";
 let AddFriendEP = "/users/AddFriend";
+let GetUserLocEP = "/users/GetFriendLoc";
 let UpdateUserLocEP = "/users/UpdateUserLoc";
-
+let GetFriendLocEP = "/users/GetFriendLoc";
 
 enum LoginStatus {
     case success
     case incorrectEntry
+    case serverError
+    case error
+}
+
+enum WebStatus {
+    case success
     case serverError
     case error
 }
@@ -41,6 +51,17 @@ struct UserAccount: Codable {
     let created_at: String
     let last_login_at: String
     let accessToken: String?
+}
+
+class FriendLocationList: Decodable {
+    var friendLocations: [FriendLocation]
+}
+
+class FriendLocation: Decodable, Identifiable {
+    var user_name: String
+    var latitude: String?
+    var longitude: String?
+    var last_update_loc: String?
 }
 
 func userLogin(userNameOrEmail: String, password: String) async -> (LoginStatus, UserAccount?) {
@@ -126,96 +147,84 @@ func CheckJWTLogin() async -> (LoginStatus, UserAccount?) {
     return (LoginStatus.error, nil)
 }
 
-//
-//Future<bool> userLogout() async {
-//  //globals.isLogin = false;
-//  user = UserAccount();
-//  loginStateController.add(false);
-//  cartStateController.add([]);
-//  SharedPreferences prefs = await SharedPreferences.getInstance();
-//  await prefs.remove("jwt");
-//  print("Logout success.");
-//  return true;
-//}
-//
-//
-//Future<bool> userRegister(
-//    TextEditingController firstName,
-//    TextEditingController lastName,
-//    TextEditingController userName,
-//    TextEditingController email,
-//    TextEditingController phone,
-//    TextEditingController address,
-//    TextEditingController password) async {
-//  final uri = Uri.https(backendUrl, createUserEP);
-//  final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
-//
-//  final response = await http.post(
-//    uri,
-//    headers: headers,
-//    body: jsonEncode(<String, String>{
-//      "user_name": userName.text.trim(),
-//      "first_name": firstName.text.trim(),
-//      "last_name": lastName.text.trim(),
-//      "email": email.text.trim(),
-//      "password": password.text.trim(),
-//      "phone": phone.text.trim(),
-//      "address": address.text.trim()
-//    }),
-//  );
-//
-//  if (response.statusCode != 200) {
-//    // If the server did not return a 200 OK response,
-//    // then throw an exception.
-//    print('Failed to load album');
-//    return false;
-//  }
-//  return true;
-//}
-//
-//void getVerificationEmail(TextEditingController email) async {
-//  final uri = Uri.https(backendUrl, resetPwEmailEP);
-//  final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
-//
-//  final response = await http.post(
-//    uri,
-//    headers: headers,
-//    body: jsonEncode(<String, String>{'email': email.text}),
-//  );
-//
-//  if (response.statusCode == 200) {
-//    // If the server did return a 200 OK response,
-//    // then parse the JSON.
-//  } else {
-//    // If the server did not return a 200 OK response,
-//    // then throw an exception.
-//  }
-//}
-//
-//Future<bool> resetPassword(TextEditingController email,
-//    TextEditingController code, TextEditingController password) async {
-//  final uri = Uri.https(backendUrl, resetPwEP);
-//  final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
-//  print(password.text);
-//  final response = await http.post(
-//    uri,
-//    headers: headers,
-//    body: jsonEncode(<String, String>{
-//      "email": email.text,
-//      "verification_type": VerificationType.reset_password.name,
-//      "verification_string": code.text,
-//      "new_password": password.text
-//    }),
-//  );
-//
-//  if (response.statusCode == 200) {
-//    // If the server did return a 200 OK response,
-//    // then parse the JSON.
-//    return true;
-//  } else {
-//    print(response.statusCode);
-//    // If the server did not return a 200 OK response,
-//    // then throw an exception.
-//    return false;
-//  }
-//}
+func AddFriend(userID: String, userName: String, userBName:String) async -> WebStatus {
+    do {
+        let defaults = UserDefaults.standard
+        guard let jwt = defaults.string(forKey: "jwt") else {
+            return WebStatus.error
+        }
+
+        guard let url = URL(string: "\(backendUrl)\(AddFriendEP)") else {
+            print("Invalid URL")
+            return WebStatus.error
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
+        let bodyData = ["user_id": userID, "user_name": userName,
+                        "userB_name": userBName] as [String : Any]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: bodyData)
+
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            print("Add friend failed")
+            return WebStatus.error
+        }
+
+        return WebStatus.success
+    } catch {
+        print("Error loading initial data: \(error)")
+    }
+    
+    return WebStatus.error
+}
+
+func GetFriendsLocation(userID: String, userName: String) async -> [FriendLocation] {
+    do {
+        let defaults = UserDefaults.standard
+        guard let jwt = defaults.string(forKey: "jwt") else {
+            return []
+        }
+
+        guard let url = URL(string: "\(backendUrl)\(GetFriendLocEP)") else {
+            print("Invalid URL")
+            return []
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+        
+        let bodyData = ["user_id": userID, "user_name": userName]
+                request.httpBody = try? JSONSerialization.data(withJSONObject: bodyData)
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            print("Request failed")
+            return []
+        }
+
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .useDefaultKeys
+        let friendsLocs = try decoder.decode(FriendLocationList.self, from: data)
+        
+        for friend in friendsLocs.friendLocations {
+            print(friend.user_name)
+            print(friend.latitude ?? "Nil")
+            print(friend.longitude ?? "Nil")
+            print(friend.last_update_loc ?? "Nil")
+        }
+        return friendsLocs.friendLocations
+    } catch {
+        print("Error loading initial data: \(error)")
+    }
+    
+    return []
+}

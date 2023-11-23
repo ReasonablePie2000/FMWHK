@@ -2,8 +2,10 @@
 //  Globals.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 20/11/2023.
-//
+// ELEC3644 Group 1
+// Team Member: LEE Cheuk Yin (3036037176)
+//              NG Kong Pang (3035721706)
+//              KWOK Yan Shing (3035994432)
 
 import Foundation
 import SwiftUI
@@ -15,6 +17,8 @@ let mainBkColor = Color(hex: "101010")
 let lightBkColor = Color(hex: "424242")
 let mainColor = Color(hex: "4BD964")
 
+
+// This color hex extension is learnt from this post: https://stackoverflow.com/questions/24263007/how-to-use-hex-color-values
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -87,10 +91,10 @@ let menuViews = [
     ViewIdentifier(id: 0, name: "Home", view: AnyView(NearbyRoutesView())),
     ViewIdentifier(id: 1, name: "Nearby Stops", view: AnyView(StopListView())),
     ViewIdentifier(id: 2, name: "Explore", view: AnyView(ExploreView())),
-    ViewIdentifier(id: 3, name: "Favourite", view: AnyView(FavouriteView())),
-    ViewIdentifier(id: 4, name: "Share Location", view: AnyView(LocationSharingView())),
-    ViewIdentifier(id: 5, name: "Reminder", view: AnyView(ReminderView())),
-    ViewIdentifier(id: 6, name: "Profile", view: AnyView(ProfileView())),
+//    ViewIdentifier(id: 3, name: "Favourite", view: AnyView(FavouriteView())),
+    ViewIdentifier(id: 3, name: "Share Location", view: AnyView(LocationSharingView())),
+//    ViewIdentifier(id: 5, name: "Reminder", view: AnyView(ReminderView())),
+    ViewIdentifier(id: 4, name: "Profile", view: AnyView(ProfileView())),
 ]
 
 struct ScrollingText: View {
@@ -140,15 +144,31 @@ func getTimeFrom(stringDate: String) -> Date? {
     return dateFormatter.date(from:stringDate)
 }
 
-func getMinTo(time: String) -> String {
+func getMinTo(time: String) -> String? {
     guard let targetTime = getTimeFrom(stringDate: time) else {
-        return "No scheduled departure at this moment"
+        return nil
     }
     
     let delta = targetTime - Date()
     
     if delta == 0 {
         return "-"
+    } else {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = delta >= 3600 ? [.hour, .minute] : [.minute]
+        return formatter.string(from: delta) ?? "Invalid Time"
+    }
+}
+
+func getMinAgo(time: String) -> String? {
+    guard let targetTime = getTimeFrom(stringDate: time) else {
+        return nil
+    }
+    
+    let delta = Date() - targetTime
+    
+    if delta == 0 {
+        return "<1"
     } else {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = delta >= 3600 ? [.hour, .minute] : [.minute]
@@ -193,7 +213,6 @@ class UserData: ObservableObject{
     @Published var userEmail: String = ""
     @Published var userRole: String = ""
     
-    
     func checkIfLogin() async {
         let (loginStatus, userAccount) = await CheckJWTLogin()
         
@@ -229,3 +248,45 @@ class UserData: ObservableObject{
     }
 }
 
+class BuildingViewModel {
+    var buildingName: String
+    var buildingDesc: String
+    var buildingImg: String
+    var coordinate: CLLocationCoordinate2D
+    
+    init(buildingName: String, buildingDesc: String, buildingImg: String, coordinate: CLLocationCoordinate2D) {
+        self.buildingName = buildingName
+        self.buildingDesc = buildingDesc
+        self.buildingImg = buildingImg
+        self.coordinate = coordinate
+    }
+}
+
+let globalBuildingList: [BuildingViewModel] = [
+    BuildingViewModel(buildingName: "HKU Loke Yew Hall", buildingDesc: "Built in 1912, the neoclassical Main Building incorporating Loke Yew Hall is the founding building of the University of Hong Kong.", buildingImg: "LYH", coordinate: lyh),
+    BuildingViewModel(buildingName: "Chi Wah Learning Commons", buildingDesc: "The 6,000 m2 Chi Wah Learning Commons (智華館) is located at the podium levels of the University’s Centennial Campus.  The facility, which spreads over three levels, is a technology-rich, shared or common space in which students, teachers and others can come together to interact, and participate in various kinds of learning activities held there.  There are a number of entrances to the Learning Commons, one of which is on the Ground (G) floor, the courtyard level, with a spiral staircase connecting levels 1 and 2 (CPD-1 and CPD-2) of the Learning Commons vertically.", buildingImg: "CWC", coordinate: cw),
+]
+
+
+let lyh = CLLocationCoordinate2D(
+    latitude: 22.283932879705663,
+    longitude: 114.13785472504728)
+//    let cyt = CLLocationCoordinate2D(
+//        latitude: 222.283257124482716, longitude: 114.13370018271972)
+let cw = CLLocationCoordinate2D(
+    latitude: 22.283519579705935, longitude: 114.13471096737511)
+let cym = CLLocationCoordinate2D(
+    latitude: 22.28272175206024, longitude: 114.1388863655295)
+let cyc = CLLocationCoordinate2D(
+    latitude: 22.28306337971004, longitude: 114.135406794366)
+let eh = CLLocationCoordinate2DMake(1, 2)
+//    let eh = CLLocationCoordinate2D(
+//        latitude: 22.28254200737399, longitude: 114.13974252320251)
+//    let hkw = CLLocationCoordinate2D(
+//        latitude: 22.282939102246427, longitude: 114.13670858347567)
+//    let ml = CLLocationCoordinate2D(
+//        latitude: 22.28324557986716, longitude: 114.13774841808377)
+//    let lily = CLLocationCoordinate2D(
+//        latitude: 22.28276130735827, longitude: 114.13840809436599)
+//    let vc = CLLocationCoordinate2D(
+//        latitude: 22.28397262458758, longitude: 114.13422906552947)

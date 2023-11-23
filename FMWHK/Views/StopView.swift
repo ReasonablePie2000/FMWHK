@@ -2,9 +2,10 @@
 //  StopView.swift
 //  FMWHK
 //
-//  Created by Sam Ng on 20/11/2023.
-//
-
+// ELEC3644 Group 1
+// Team Member: LEE Cheuk Yin (3036037176)
+//              NG Kong Pang (3035721706)
+//              KWOK Yan Shing (3035994432)
 import SwiftUI
 
 struct StopView: View {
@@ -36,7 +37,7 @@ struct StopView: View {
                             .font(.title)
                         Text("To \(stop.destEn)")
                             .frame(width: UIScreen.screenWidth * (3/5))
-                        Text(getMinTo(time: stop.eta ?? "No Data"))
+                        Text(getMinTo(time: stop.eta ?? "No Data") ?? "-")
                             .frame(width: UIScreen.screenWidth * (1/5))
                     }
                     .padding()
